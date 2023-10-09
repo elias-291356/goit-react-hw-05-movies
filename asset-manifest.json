@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/elias-291356/goit-react-hw-05-movies.git/static/css/main.7acaea2f.css",
+    "main.js": "/elias-291356/goit-react-hw-05-movies.git/static/js/main.07d3183d.js",
+    "index.html": "/elias-291356/goit-react-hw-05-movies.git/index.html",
+    "main.7acaea2f.css.map": "/elias-291356/goit-react-hw-05-movies.git/static/css/main.7acaea2f.css.map",
+    "main.07d3183d.js.map": "/elias-291356/goit-react-hw-05-movies.git/static/js/main.07d3183d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.07d3183d.js"
+  ]
+}
