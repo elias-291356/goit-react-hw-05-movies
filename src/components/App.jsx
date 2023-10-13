@@ -30,15 +30,7 @@ export const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MoviesPage />} />
             <Route path="/movies/:movieId/*" element={<MoviesDetails />} />
-            <Route
-              path="*"
-              element={
-                <div>
-                  <NotFoundPage />
-                  <Link to="/">Go back to Home</Link>
-                </div>
-              }
-            />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>
