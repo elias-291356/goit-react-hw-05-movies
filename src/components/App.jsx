@@ -1,19 +1,55 @@
+// import { requestTrendMovies } from '../services/api'
+// import { requestMovies } from '../services/api'
+// import { requestDetails } from '../services/api'
+// import { requestCredits } from '../services/api'
+// import { requestReviews } from '../services/api'
+import React from 'react';
+import NotFoundPage from 'pages/NotFoundPage';
+import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { HomePage } from 'pages/HomePage';
+import MoviesDetails from '../pages/MoviesDetails';
+import { MoviesPage } from '../pages/MoviesPage';
+import { Reviews } from './Reviews/Reviews';
+import { Cast } from './Cast/Cast';
+// import Trend from './Trend/Trend';
+
+// import { Header } from "../components/Header";
+import 'bulma/css/bulma.css';
 export const App = () => {
+  const location = useLocation();
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <nav
+        className="navbar is-warning "
+        role="navigation"
+        aria-label="dropdown navigation "
+      >
+        <Link className="navbar-item" to="/">
+          Home
+        </Link>
+        <Link className="navbar-item" to="/movies">
+          Movies
+        </Link>
+      </nav>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* <Route index element={<HomePage />} /> */}
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId/*" element={<MoviesDetails />} />
+
+          <Route
+            path="*"
+            element={
+              <div>
+                <NotFoundPage />
+                <Link to="/">Go back to Home</Link>
+              </div>
+            }
+          />
+        </Routes>
+      </main>
     </div>
   );
 };
-
-// f2ffea4938b1399a0724ac9ef0692c2b
-// eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMmZmZWE0OTM4YjEzOTlhMDcyNGFjOWVmMDY5MmMyYiIsInN1YiI6IjY1MjNmYzc2NzQ1MDdkMDBjNTdkNmExZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.95HCn9y3f3Oli4ct9fXYlAdce3u1F6PTA3XkLljTbM8

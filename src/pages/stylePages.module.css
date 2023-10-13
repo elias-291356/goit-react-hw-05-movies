@@ -1,0 +1,21 @@
+.movieDetailseWrap {
+  display: flex;
+
+}
+
+.movieDetailseDescr {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 20px;
+  width: 600px;
+}
+
+.movieDetailseImg {
+  width: 400px;
+}
+
+.character {
+  background-color: red;
+  width: 200px;
+}
