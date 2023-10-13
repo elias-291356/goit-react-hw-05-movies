@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  Link,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import { requestMovies } from '../services/api';
-export const MoviesPage = () => {
+const MoviesPage = () => {
   const [searchMovie, setsearchedMovie] = useState([]);
-
   const [params, setUseParams] = useSearchParams();
-
-  // const location = useLocation();
-  // const backLinkRef = useRef(location.state?.from);
+  const location = useLocation();
 
   const onSubmit = event => {
     event.preventDefault();
@@ -38,7 +30,6 @@ export const MoviesPage = () => {
 
   return (
     <div>
-      {/* <Link to={backLinkRef.current ?? '/movies'}>Go back</Link> */}
       <form onSubmit={onSubmit}>
         <input
           className="input is-warning"
@@ -52,8 +43,8 @@ export const MoviesPage = () => {
         </button>
         <ul>
           {searchMovie.map(movie => (
-            <li>
-              <Link to={`/movies/${movie.id}`}>
+            <li key={movie.id} className="title is-6">
+              <Link state={{ from: location }} to={`/movies/${movie.id}`}>
                 {movie.title || movie.name}
               </Link>
             </li>
@@ -63,3 +54,5 @@ export const MoviesPage = () => {
     </div>
   );
 };
+
+export default MoviesPage;

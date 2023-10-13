@@ -30,7 +30,6 @@ export const requestMovies = async (inputValue) => {
 
 export const requestDetails = async (movieId) => {
 	const { data } = await instance.get(`/movie/${movieId}`);
-	console.log(data)
 	return data;
 
 };

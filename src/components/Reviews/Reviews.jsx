@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { requestReviews } from 'services/api';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [fetchResultReviews, setFetchResultReviews] = useState([]);
   const { movieId } = useParams();
-  console.log(fetchResultReviews);
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -20,7 +20,7 @@ export const Reviews = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <div className="content is-normal">
       <ul>
         {fetchResultReviews?.results?.length > 0 ? (
           fetchResultReviews.results.map(el => (
@@ -38,3 +38,5 @@ export const Reviews = () => {
     </div>
   );
 };
+
+export default Reviews;

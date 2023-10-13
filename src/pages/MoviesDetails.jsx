@@ -1,36 +1,28 @@
-import { Cast } from 'components/Cast/Cast';
-import { Reviews } from 'components/Reviews/Reviews';
-import { useEffect, useRef, useState } from 'react';
-import {
-  Link,
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useParams,
-} from 'react-router-dom';
+import Cast from 'components/Cast/Cast';
+import Loader from 'components/Loader/Loader';
+import Reviews from 'components/Reviews/Reviews';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { requestDetails } from 'services/api';
 import styles from './stylePages.module.css';
 
-// import { useSearchParams } from 'react-router-dom';
-
 const MoviesDetails = () => {
-  // const location = useLocation();
+  // const [error, setError] = useState(null);
   const [ResultMovieDetailse, setResultMovieDetailse] = useState();
   const { movieId } = useParams();
+
   const location = useLocation();
-  const backLinkRef = useRef(location.state?.from);
-  const [error, setError] = useState(null);
+  const backMoviesPageRef = useRef(location.state?.from);
 
   useEffect(() => {
     if (!movieId) return;
     const fetchMovieDetails = async () => {
       try {
         const data = await requestDetails(movieId);
-        console.log(data);
+
         setResultMovieDetailse(data);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
     };
     fetchMovieDetails();
@@ -39,7 +31,9 @@ const MoviesDetails = () => {
   return (
     <div>
       <div>
-        <Link to={backLinkRef.current ?? '/'}>Go back</Link>
+        <Link className="button is-dark" to={backMoviesPageRef.current ?? '/'}>
+          Go back
+        </Link>
         {ResultMovieDetailse && (
           <div
             key={ResultMovieDetailse.id}
@@ -58,7 +52,7 @@ const MoviesDetails = () => {
               <h3>Genres</h3>
               <ul>
                 {ResultMovieDetailse.genres.map(genre => (
-                  <p>{genre.title || genre.name}</p>
+                  <p key={genre.id}>{genre.title || genre.name}</p>
                 ))}
               </ul>
             </div>
@@ -66,15 +60,21 @@ const MoviesDetails = () => {
         )}
       </div>
       <div>
-        <h3> Additional information</h3>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
+        <h3 className="title is-4"> Additional information</h3>
+        <Link to="cast" className="title is-6">
+          Cast
+        </Link>
+        <Link to="reviews" className="title is-6 is-light">
+          /Reviews
+        </Link>
       </div>
       <div>
-        <Routes>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );

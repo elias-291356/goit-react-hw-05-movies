@@ -1,40 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { requestTrendMovies } from '../services/api';
 
-export const HomePage = () => {
+const HomePage = () => {
   const [trendMovies, setTrendMovies] = useState([]);
 
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!trendMovies) return;
-    const fetchTrendMovies = async () => {
-      try {
-        const { results } = await requestTrendMovies();
-        setTrendMovies(results);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
+    if (!trendMovies || trendMovies.length === 0) {
+      const fetchTrendMovies = async () => {
+        try {
+          const { results } = await requestTrendMovies();
+          setTrendMovies(results);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
 
-    fetchTrendMovies(trendMovies);
+      fetchTrendMovies();
+    }
   }, [trendMovies]);
 
   return (
     <div>
-      <aside>
-        <h1 className="menu-label">Trending movies</h1>
-        <ul className="menu-list">
-          {trendMovies.map(el => {
-            return (
+      <h1 className="title is-4">Trending movies</h1>
+      <ul>
+        {trendMovies.map(el => {
+          return (
+            <li key={el.id}>
               <Link to={`/movies/${el.id}`} key={el.id}>
                 {el.title || el.name}
               </Link>
-            );
-          })}
-        </ul>
-      </aside>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
+export default HomePage;

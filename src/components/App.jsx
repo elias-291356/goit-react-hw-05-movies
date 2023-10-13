@@ -1,24 +1,16 @@
-// import { requestTrendMovies } from '../services/api'
-// import { requestMovies } from '../services/api'
-// import { requestDetails } from '../services/api'
-// import { requestCredits } from '../services/api'
-// import { requestReviews } from '../services/api'
-import React from 'react';
-import NotFoundPage from 'pages/NotFoundPage';
-import { Link, Routes, Route, useLocation } from 'react-router-dom';
-import { HomePage } from 'pages/HomePage';
-import MoviesDetails from '../pages/MoviesDetails';
-import { MoviesPage } from '../pages/MoviesPage';
-import { Reviews } from './Reviews/Reviews';
-import { Cast } from './Cast/Cast';
-// import Trend from './Trend/Trend';
-
-// import { Header } from "../components/Header";
+import React, { Suspense, lazy } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
+import Loader from './Loader/Loader';
 import 'bulma/css/bulma.css';
+
+const HomePage = lazy(() => import('pages/HomePage'));
+const MoviesDetails = lazy(() => import('../pages/MoviesDetails'));
+const MoviesPage = lazy(() => import('../pages/MoviesPage'));
+const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
+
 export const App = () => {
-  const location = useLocation();
   return (
-    <div>
+    <div className="container">
       <nav
         className="navbar is-warning "
         role="navigation"
@@ -33,22 +25,22 @@ export const App = () => {
       </nav>
 
       <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* <Route index element={<HomePage />} /> */}
-          <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:movieId/*" element={<MoviesDetails />} />
-
-          <Route
-            path="*"
-            element={
-              <div>
-                <NotFoundPage />
-                <Link to="/">Go back to Home</Link>
-              </div>
-            }
-          />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movies" element={<MoviesPage />} />
+            <Route path="/movies/:movieId/*" element={<MoviesDetails />} />
+            <Route
+              path="*"
+              element={
+                <div>
+                  <NotFoundPage />
+                  <Link to="/">Go back to Home</Link>
+                </div>
+              }
+            />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   );
